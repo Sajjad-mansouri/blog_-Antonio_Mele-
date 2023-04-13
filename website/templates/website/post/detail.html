@@ -11,4 +11,29 @@
 <p>publish {{post.publish}} by {{post.author}}</p>
 <p>{{post.description|linebreaks}}</p>
 
+
+{%with comments.count as total_comment%}
+<p>{{total_comment}} comment{{total_comment|pluralize}}</p>
+{%endwith%}
+
+{%for comment in comments%}
+<div class='comment'>
+	<p>comment {{forloop.counter}} by {{comment.name}}</p>
+<p>{{comment.body}}</p>
+</div>
+{%empty%}
+
+<p>there is no comment</p>
+
+{%endfor%}
+{%if added%}
+<div class='message'><p>your comment is added</p></div>
+
+{%endif%}
+<form method='post'>
+	{%csrf_token%}
+	{{comment_form.as_p}}
+	<input type="submit" name="submit">
+	
+</form>
 {%endblock%}

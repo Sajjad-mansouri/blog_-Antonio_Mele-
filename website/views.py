@@ -34,16 +34,18 @@ def post_detail(request,**kwargs):
 
 	# return render(request,'website/post/detail.html',context={'post':post})
 	comments=post.comments.filter(active=True)
+	added=False
 	if request.method =="POST":
 		comment_form=forms.CommentForm(request.POST)
 		if comment_form.is_valid():
-			new_comment=form.save(commit=False)
-			new_comment['post']=post
+			new_comment=comment_form.save(commit=False)
+			new_comment.post=post
 			new_comment.save()
+			added=True
 	else:
 		comment_form=forms.CommentForm()
 
-	return render(request,'website/post/detail.html',context={'post':post,'comment':comments,'comment_form':comment_form})
+	return render(request,'website/post/detail.html',context={'post':post,'comments':comments,'comment_form':comment_form,'added':added})
 
 
 def share_post(request,id):
