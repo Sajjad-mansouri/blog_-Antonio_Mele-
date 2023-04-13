@@ -4,7 +4,7 @@
 
 {%block content%}
 
-{%for post in posts%}
+{%for post in page_obj%}
 <h1>My blog Website</h1>
 <hr>
 <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
@@ -12,5 +12,5 @@
 <p>{{post.description|truncatewords:30|linebreaks}}</p>
 
 {%endfor%}
-
+{% include 'website/pagination.html'%}
 {%endblock%}

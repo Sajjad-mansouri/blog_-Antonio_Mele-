@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.core.paginator import Paginator
 from .models import Post
 
 
@@ -6,7 +7,10 @@ from .models import Post
 def post_list(request):
 
 	posts=Post.published.all()
-	return render(request,'website/post/list.html',context={'posts':posts})
+	paginator=Paginator(posts,1)
+	page_number=request.GET.get('page')
+	page_object=paginator.get_page(page_number)
+	return render(request,'website/post/list.html',context={'page_obj':page_object})
 
 
 def post_detail(request,**kwargs):
