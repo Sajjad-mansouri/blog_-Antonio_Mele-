@@ -1,0 +1,16 @@
+{%extends 'website/base.html'%}
+
+{%block title%}My Website{%endblock%}
+
+{%block content%}
+
+{%for post in posts%}
+<h1>My blog Website</h1>
+<hr>
+<h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+<p>publish {{post.publish}} by {{post.author}}</p>
+<p>{{post.description|truncatewords:30|linebreaks}}</p>
+
+{%endfor%}
+
+{%endblock%}

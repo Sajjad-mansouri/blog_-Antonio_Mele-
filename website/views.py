@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from .models import Post
 
 
@@ -6,16 +6,18 @@ from .models import Post
 def post_list(request):
 
 	posts=Post.published.all()
-	return render(request,'website/post/list.html',context={'post':posts})
+	return render(request,'website/post/list.html',context={'posts':posts})
 
 
-def post_detail(request):
+def post_detail(request,**kwargs):
+	print(kwargs['slug'])
 
-	post=get_object_or_404(Post,slug=slug,
+	post=get_object_or_404(Post,slug=kwargs['slug'],
 								status='p',
-								publish__yeaer=year,
-								publish__month=month,
-								publisih__day=day,
+								publish__year=kwargs['year'],
+								publish__month=kwargs['month'],
+								publish__day=kwargs['day'],
+								
 
 												)
 

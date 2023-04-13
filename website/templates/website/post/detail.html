@@ -1,0 +1,13 @@
+{%extends 'website/base.html'%}
+
+{%block title%}{{post.title}}{%endblock%}
+
+{%block content%}
+
+<h1>My blog Website</h1>
+<hr>
+<h2>{{post.title}}</h2>
+<p>publish {{post.publish}} by {{post.author}}</p>
+<p>{{post.description|linebreaks}}</p>
+
+{%endblock%}

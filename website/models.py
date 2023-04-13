@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 class PublishedManger(models.Manager):
 	def get_queryset(self):
@@ -26,3 +27,9 @@ class Post(models.Model):
 		ordering=['-publish']
 	def __str__(self):
 		return self.title
+
+	def get_absolute_url(self):
+		return reverse('detail',kwargs={'slug':self.slug,
+										'year':self.publish.year,
+										'month':self.publish.month,
+										'day':self.publish.day})
