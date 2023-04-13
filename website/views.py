@@ -1,16 +1,21 @@
 from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
+from django.views.generic import ListView,DetailView
 from .models import Post
 
 
+class PostList(ListView):
+	queryset=Post.published.all()
+	template_name='website/post/list.html'
+	paginate_by=1
+	context_object_name='posts'
+# def post_list(request):
 
-def post_list(request):
-
-	posts=Post.published.all()
-	paginator=Paginator(posts,1)
-	page_number=request.GET.get('page')
-	page_object=paginator.get_page(page_number)
-	return render(request,'website/post/list.html',context={'page_obj':page_object})
+# 	posts=Post.published.all()
+# 	paginator=Paginator(posts,1)
+# 	page_number=request.GET.get('page')
+# 	page_object=paginator.get_page(page_number)
+# 	return render(request,'website/post/list.html',context={'page_obj':page_object})
 
 
 def post_detail(request,**kwargs):
