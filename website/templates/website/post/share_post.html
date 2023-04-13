@@ -1,0 +1,15 @@
+{%extends 'website/base.html'%}
+{%block content%}
+{% if sent%}
+your email sent successfuly
+
+{%else%}
+<form method='post'>
+	{%csrf_token%}
+	{{form.as_p}}
+	<input type="submit" name="send_email">
+	
+
+</form>
+{%endif%}
+{%endblock%}

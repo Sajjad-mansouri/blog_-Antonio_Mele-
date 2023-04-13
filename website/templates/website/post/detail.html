@@ -7,6 +7,7 @@
 <h1>My blog Website</h1>
 <hr>
 <h2>{{post.title}}</h2>
+<span><a href="{% url 'website:share' post.pk%}">share</a></span>
 <p>publish {{post.publish}} by {{post.author}}</p>
 <p>{{post.description|linebreaks}}</p>
 

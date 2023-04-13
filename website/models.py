@@ -29,7 +29,7 @@ class Post(models.Model):
 		return self.title
 
 	def get_absolute_url(self):
-		return reverse('detail',kwargs={'slug':self.slug,
+		return reverse('website:detail',kwargs={'slug':self.slug,
 										'year':self.publish.year,
 										'month':self.publish.month,
 										'day':self.publish.day})
