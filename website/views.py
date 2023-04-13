@@ -2,6 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator
 from django.views.generic import ListView,DetailView
 from django.core.mail import send_mail
+from taggit.models import Tag
 from . import forms
 from .models import Post
 
@@ -11,13 +12,18 @@ class PostList(ListView):
 	template_name='website/post/list.html'
 	paginate_by=1
 	context_object_name='posts'
-# def post_list(request):
 
-# 	posts=Post.published.all()
-# 	paginator=Paginator(posts,1)
-# 	page_number=request.GET.get('page')
-# 	page_object=paginator.get_page(page_number)
-# 	return render(request,'website/post/list.html',context={'page_obj':page_object})
+def post_list(request,tag_name=None):
+
+	posts=Post.published.all()
+	tag=None
+	if tag_name:
+		tag=get_object_or_404(Tag,slug=tag_name)
+		posts=posts.filter(tags__in=[tag])
+	paginator=Paginator(posts,1)
+	page_number=request.GET.get('page')
+	page_object=paginator.get_page(page_number)
+	return render(request,'website/post/list.html',context={'posts':page_object,'tag':tag})
 
 
 def post_detail(request,**kwargs):
