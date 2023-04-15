@@ -1,11 +1,11 @@
 {%extends 'website/base.html'%}
-
+{%load blog_tags%}
 {%block title%}My Website{%endblock%}
 
 {%block content%}
-
-{%for post in posts%}
 <h1>My blog Website</h1>
+{%for post in posts%}
+
 <hr>
 {%if tag%}
 <h1>Posts tagged with {{tag}}</h1>
@@ -18,7 +18,7 @@
 	<a href="{%url 'website:tagged-post-list' tag.slug %}">{{tag}}{%if not forloop.last%},{%endif%}</a>
 	{%endfor%}
 </p>
-<p>{{post.description|truncatewords:30|linebreaks}}</p>
+<p>{{post.description|markdown|truncatewords_html:30}}</p>
 
 {%endfor%}
 {% include 'website/pagination.html' with page_obj=posts%}
