@@ -7,3 +7,16 @@
 	width: 400px;
 	background-color: green;
 }
+
+.main{
+	width: 800px;
+		float: left;
+
+}
+
+.sidebar{
+	float: right;
+	height: 400px;
+	width: 400px;
+	border: 1px solid black;
+}

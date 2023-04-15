@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.views.generic import ListView,DetailView
 from django.core.mail import send_mail
 from taggit.models import Tag
+from django.db.models import Count
 from . import forms
 from .models import Post
 
@@ -20,14 +21,13 @@ def post_list(request,tag_name=None):
 	if tag_name:
 		tag=get_object_or_404(Tag,slug=tag_name)
 		posts=posts.filter(tags__in=[tag])
-	paginator=Paginator(posts,1)
+	paginator=Paginator(posts,5)
 	page_number=request.GET.get('page')
 	page_object=paginator.get_page(page_number)
 	return render(request,'website/post/list.html',context={'posts':page_object,'tag':tag})
 
 
 def post_detail(request,**kwargs):
-	print(kwargs['slug'])
 
 	post=get_object_or_404(Post,slug=kwargs['slug'],
 								status='p',
@@ -37,6 +37,13 @@ def post_detail(request,**kwargs):
 								
 
 												)
+
+	post_tags_id=post.tags.values_list('id',flat=True)
+	similar=Post.published.filter(tags__in=post_tags_id).exclude(id=post.id)
+
+	similar=similar.annotate(same_tags=Count('tags')).order_by('-same_tags','-publish')[:5]
+
+
 
 	# return render(request,'website/post/detail.html',context={'post':post})
 	comments=post.comments.filter(active=True)
@@ -51,7 +58,7 @@ def post_detail(request,**kwargs):
 	else:
 		comment_form=forms.CommentForm()
 
-	return render(request,'website/post/detail.html',context={'post':post,'comments':comments,'comment_form':comment_form,'added':added})
+	return render(request,'website/post/detail.html',context={'post':post,'comments':comments,'similar':similar,'comment_form':comment_form,'added':added})
 
 
 def share_post(request,id):

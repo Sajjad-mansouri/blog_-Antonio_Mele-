@@ -13,6 +13,7 @@
 <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
 <p>publish {{post.publish}} by {{post.author}}</p>
 <p class='tag'>
+	tags:
 	{%for tag in post.tags.all%}
 	<a href="{%url 'website:tagged-post-list' tag.slug %}">{{tag}}{%if not forloop.last%},{%endif%}</a>
 	{%endfor%}

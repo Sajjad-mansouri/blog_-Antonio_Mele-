@@ -8,7 +8,15 @@
 	<title>{%block title%}{%endblock%}</title>
 </head>
 <body>
-{%block content%}
+	<div class='main'>
+		{%block content%}
 {%endblock%}
+	</div>
+	<div class='sidebar'>
+		
+{% block sidebar%}
+{%endblock%}
+	</div>
+
 </body>
 </html>

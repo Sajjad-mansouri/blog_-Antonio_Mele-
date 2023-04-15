@@ -11,7 +11,13 @@
 <p>publish {{post.publish}} by {{post.author}}</p>
 <p>{{post.description|linebreaks}}</p>
 
+<h2>Similar Post</h2>
 
+{%for post in similar%}
+<p><a href="{{ post.get_absolute_url }}">{{post.title}}</a></p>
+{%endfor%}
+
+<h2>Comments:</h2>
 {%with comments.count as total_comment%}
 <p>{{total_comment}} comment{{total_comment|pluralize}}</p>
 {%endwith%}
@@ -36,4 +42,9 @@
 	<input type="submit" name="submit">
 	
 </form>
+{%endblock%}
+
+
+{% block sidebar%}
+
 {%endblock%}
