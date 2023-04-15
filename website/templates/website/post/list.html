@@ -10,7 +10,9 @@
 {%if tag%}
 <h1>Posts tagged with {{tag}}</h1>
 {%endif%}
+{% autoescape off %}
 <h2><a href="{{post.get_absolute_url}}">{{post.title}}</a></h2>
+{%endautoescape %}
 <p>publish {{post.publish}} by {{post.author}}</p>
 <p class='tag'>
 	tags:

@@ -1,6 +1,7 @@
 from django import template
 from django.db.models import Count
 from django.utils.safestring import mark_safe
+from django.utils.html import conditional_escape 
 import markdown
 from website.models import Post
 register=template.Library()
